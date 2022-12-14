@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @WebMvcTest(controllers = CarController.class)
 @ExtendWith(SpringExtension.class)
@@ -16,6 +17,14 @@ class CarControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @Autowired
+    private CarController controller;
+
+    @Test
+    public void contextLoads() {
+        assertThat(controller).isNotNull();
+    }
 
     @Test
     void getAllCarsTest() throws Exception {
