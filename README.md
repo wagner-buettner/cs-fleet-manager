@@ -12,4 +12,10 @@ Demo API for Clever Shuttle
 ### Running the project locally ###
 * Run locally the project into your IDE with the lombok plugin
 
+### Build and Run ###
+Go to the project folder and run:
+* ./gradlew clean build -x test
+* docker build . -t fleet-manager:latest
+* docker-compose up -d
+
 [//]: # (* more instructions to come TODO )

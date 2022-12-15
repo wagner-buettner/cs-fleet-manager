@@ -9,6 +9,7 @@ services:
       context: .
     container_name: fleet-manager
     restart: always
+    pull_policy: always
     depends_on:
       - postgres_db
     environment:
