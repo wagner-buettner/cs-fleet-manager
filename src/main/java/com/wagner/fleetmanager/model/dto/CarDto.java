@@ -1,10 +1,12 @@
 package com.wagner.fleetmanager.model.dto;
 
+import com.wagner.fleetmanager.model.enumerations.CarStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -20,7 +22,8 @@ public class CarDto {
 
     private String licensePlate;
 
-    private String status;
+    @Enumerated
+    private CarStatus status;
 
     private LocalDateTime createdAt;
 
