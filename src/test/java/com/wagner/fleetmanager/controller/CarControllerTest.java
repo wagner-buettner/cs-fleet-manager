@@ -2,6 +2,7 @@ package com.wagner.fleetmanager.controller;
 
 import com.wagner.fleetmanager.AbstractTest;
 import com.wagner.fleetmanager.model.Car;
+import com.wagner.fleetmanager.model.dto.CarDto;
 import com.wagner.fleetmanager.service.CarService;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -51,22 +52,18 @@ class CarControllerTest extends AbstractTest {
     void findAllCarsTest() throws Exception {
         given(carService.findAll())
             .willReturn(List.of(
-                new Car(
+                new CarDto(
                     UUID.randomUUID(),
                     "BMW",
                     "B-CS2255E",
-                    "Bayern Kfz",
-                    "München",
                     "available",
                     LocalDateTime.now(),
                     LocalDateTime.now()
                 ),
-                new Car(
+                new CarDto(
                     UUID.randomUUID(),
                     "BMW",
                     "B-CS1177E",
-                    "Bayern Kfz",
-                    "München",
                     "available",
                     LocalDateTime.now(),
                     LocalDateTime.now()
