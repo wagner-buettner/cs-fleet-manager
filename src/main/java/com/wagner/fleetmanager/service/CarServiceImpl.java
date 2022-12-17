@@ -1,5 +1,6 @@
 package com.wagner.fleetmanager.service;
 
+import com.wagner.fleetmanager.exceptionhandler.LicensePlateDuplicated;
 import com.wagner.fleetmanager.model.Car;
 import com.wagner.fleetmanager.repository.CarRepository;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,21 @@ public class CarServiceImpl implements CarService{
 
     @Override
     public List<Car> createCars(List<Car> carList) {
+        validateIfLicensePlateExists(carList);
         return repository.saveAll(carList);
     }
 
     @Override
     public List<Car> findAll() {
         return repository.findAll();
+    }
+
+    private void validateIfLicensePlateExists(List<Car> carList) {
+        carList.stream()
+            .filter(car -> repository.existsCarsByLicensePlate(car.getLicensePlate()))
+            .findAny()
+            .ifPresent(car -> {
+                throw new LicensePlateDuplicated(car.getLicensePlate());
+            });
     }
 }

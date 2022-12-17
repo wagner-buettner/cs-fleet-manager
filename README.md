@@ -18,4 +18,8 @@ Go to the project folder and run:
 * docker build . -t fleet-manager:latest
 * docker-compose up -d
 
+### Postrgres+Docker string connection: ###
+##### in case if you want to connect to the database console #####
+* psql -U fleet-manager-usr -d fleet-manager-db
+
 [//]: # (* more instructions to come TODO )
