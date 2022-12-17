@@ -2,7 +2,7 @@ spring:
   application:
     name: fleet-manager
   profiles:
-    active: prod
+    active: local
 server:
   port: ${port:8080}
 ---
