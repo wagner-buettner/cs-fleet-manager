@@ -3,7 +3,9 @@ package com.wagner.fleetmanager.controller;
 import com.wagner.fleetmanager.AbstractTest;
 import com.wagner.fleetmanager.model.Car;
 import com.wagner.fleetmanager.model.dto.CarDto;
+import com.wagner.fleetmanager.model.enumerations.CarStatus;
 import com.wagner.fleetmanager.service.CarService;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,6 +23,8 @@ import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -56,7 +60,7 @@ class CarControllerTest extends AbstractTest {
                     UUID.randomUUID(),
                     "BMW",
                     "B-CS2255E",
-                    "available",
+                    CarStatus.AVAILABLE,
                     LocalDateTime.now(),
                     LocalDateTime.now()
                 ),
@@ -64,7 +68,7 @@ class CarControllerTest extends AbstractTest {
                     UUID.randomUUID(),
                     "BMW",
                     "B-CS1177E",
-                    "available",
+                    CarStatus.AVAILABLE,
                     LocalDateTime.now(),
                     LocalDateTime.now()
                 )));
@@ -81,35 +85,67 @@ class CarControllerTest extends AbstractTest {
     public void createTwoCarsTest() throws Exception {
         String uri = "/v1/cars";
 
-        Car car1 = new Car();
-        car1.setBrand("Volkswagen");
-        car1.setLicensePlate("V-CS1122E");
-        car1.setManufacturer("Hamburger Manufacturer");
-        car1.setOperationCity("Hamburg");
-        car1.setStatus("available");
-        car1.setCreatedAt(LocalDateTime.now());
-        car1.setLastUpdatedAt(LocalDateTime.now());
+        List<Car> carListToCreate = getCarListToCreate();
+        String inputJson = super.mapToJson(carListToCreate);
 
-        Car car2 = new Car();
-        car2.setBrand("Volkswagen");
-        car2.setLicensePlate("V-CS3344E");
-        car2.setManufacturer("Hamburger Manufacturer");
-        car2.setOperationCity("Hamburg");
-        car2.setStatus("available");
-        car2.setCreatedAt(LocalDateTime.now());
-        car2.setLastUpdatedAt(LocalDateTime.now());
+        List<CarDto> carListDto = getCarDtoList();
+        given(carService.createCars(any())).willReturn(carListDto);
 
-        List<Car> carList = List.of(car1, car2);
-
-        String inputJson = super.mapToJson(carList);
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(inputJson))
             .andExpect(status().isCreated())
+            .andExpect(jsonPath("$[0].licensePlate", is("V-CS1122E")))
             .andReturn();
 
         int status = mvcResult.getResponse().getStatus();
         assertEquals(201, status);
+    }
+
+    @NotNull
+    private static List<CarDto> getCarDtoList() {
+        CarDto carDto1 = new CarDto();
+        carDto1.setBrand("Volkswagen");
+        carDto1.setLicensePlate("V-CS1122E");
+        carDto1.setStatus(CarStatus.AVAILABLE);
+        carDto1.setCreatedAt(LocalDateTime.now());
+        carDto1.setLastUpdatedAt(LocalDateTime.now());
+
+        CarDto carDto2 = new CarDto();
+        carDto2.setBrand("Volkswagen");
+        carDto2.setLicensePlate("V-CS3344E");
+        carDto2.setStatus(CarStatus.AVAILABLE);
+        carDto2.setCreatedAt(LocalDateTime.now());
+        carDto2.setLastUpdatedAt(LocalDateTime.now());
+
+        List<CarDto> carListDto = List.of(carDto1, carDto2);
+        return carListDto;
+    }
+
+    @NotNull
+    private static List<Car> getCarListToCreate() {
+        Car car1 = new Car();
+        car1.setId(null);
+        car1.setBrand("Volkswagen");
+        car1.setLicensePlate("V-CS1122E");
+        car1.setManufacturer("Hamburger Manufacturer");
+        car1.setOperationCity("Hamburg");
+        car1.setStatus(CarStatus.AVAILABLE);
+        car1.setCreatedAt(LocalDateTime.now());
+        car1.setLastUpdatedAt(LocalDateTime.now());
+
+        Car car2 = new Car();
+        car2.setId(null);
+        car2.setBrand("Volkswagen");
+        car2.setLicensePlate("V-CS3344E");
+        car2.setManufacturer("Hamburger Manufacturer");
+        car2.setOperationCity("Hamburg");
+        car2.setStatus(CarStatus.AVAILABLE);
+        car2.setCreatedAt(LocalDateTime.now());
+        car2.setLastUpdatedAt(LocalDateTime.now());
+
+        List<Car> carListToCreate = List.of(car1, car2);
+        return carListToCreate;
     }
 
 }

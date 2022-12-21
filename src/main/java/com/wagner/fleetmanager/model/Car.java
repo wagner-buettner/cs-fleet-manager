@@ -1,6 +1,5 @@
 package com.wagner.fleetmanager.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wagner.fleetmanager.model.enumerations.CarStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -6,6 +6,8 @@ public enum CarStatus {
 
     @JsonProperty("available")
     AVAILABLE,
-    @JsonProperty("unavailable")
-    UNAVAILABLE;
+    @JsonProperty("in-maintenance")
+    IN_MAINTENANCE,
+    @JsonProperty("out-of-service")
+    OUT_OF_SERVICE
 }
