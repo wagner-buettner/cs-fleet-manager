@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: fleet-manager
+  profiles:
+    active: local
+server:
+  port: ${port:8080}
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/fleet-manager-db
+    username: fleet-manager-usr
+    password: password123#
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    show-sql: true

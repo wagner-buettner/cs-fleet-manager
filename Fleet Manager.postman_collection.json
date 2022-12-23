@@ -1,0 +1,59 @@
+{
+	"info": {
+		"_postman_id": "3e5eb840-0043-4a28-81a7-35ed36c17749",
+		"name": "Fleet Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9660116"
+	},
+	"item": [
+		{
+			"name": "Get Cars",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/cars",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Cars",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"brand\": \"BMW\",\r\n        \"licensePlate\": \"L-403987256483”\",\r\n        \"manufacturer\": \"Bayern KFZ\",\r\n        \"operationCity\": \"München\",\r\n        \"status\": \"available\",\r\n        \"createdAt\": \"2022-12-14T17:36:54.6674271\",\r\n        \"lastUpdatedAt\": \"2022-12-14T17:36:54.6674335\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/cars",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"cars"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
